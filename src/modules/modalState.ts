@@ -16,7 +16,11 @@ class ModalState {
         this.currentModal.value = modal; 
         this.tempData.value = data;
     }
-    public closeModal(): void { this.currentModal.value = null; }
+    
+    public closeModal(): void { 
+        this.currentModal.value = null; 
+        this.tempData.value = null;
+    }
 
     public getCurrentModal(): string | null { return this.currentModal.value; }
     public getTempData(): any { return this.tempData.value; }
