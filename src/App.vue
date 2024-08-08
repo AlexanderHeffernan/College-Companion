@@ -1,12 +1,50 @@
-<script setup>
-  import { Task } from './modules/task.js';
+<script lang="ts" setup>
+  import TaskItem from './components/TaskItem.vue';
+  import { taskManager } from './modules/taskManager';
+  import { modalState } from './modules/modalState';
+  import { Task } from './modules/task';
+  import EditItem from './components/EditItem.vue';
 
-  const task = new Task(1, "Assignment 1", "2024-09-30", "Incomplete", 0);
+  // Adding some tasks for demonstration
+  taskManager.addTask(Task.createQuickTask('Math Homework'));
+  taskManager.addTask(Task.createQuickTask('Science Project'));
 </script>
-
 <template>
-  <h1>{{task.title}}</h1>
+  <div id="app">
+    <EditItem v-if="modalState.getCurrentModal() === 'edit'" />
+    <h1 class="text-white text-2xl font-bold">Your Tasks</h1>
+    <TaskItem v-for="task in taskManager.getTasks()" :key="task.getId()" :task="task" />
+  </div>
 </template>
 
 <style>
+#app, .modalBox {
+  width: 100%;
+  max-width: 600px;
+  height: 600px;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  text-align: center;
+  color: #2c3e50;
+  background-color: rgb(24, 30, 46);
+  border-radius: 12px;
+  position: relative;
+}
+
+#app {
+  margin-top: 50px;
+}
+body {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(20, 22, 28);
+  width: 100vw;
+}
+
+@media screen and (max-width: 600px) {
+  #app, .modalBox {
+    margin-top: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+}
 </style>
