@@ -25,9 +25,15 @@ export class Task {
 
     public getId(): string { return this.id; }
     public getTitle(): string { return this.title; }
+    public setTitle(title: string): void { this.title = title; }
+
     public getDueDate(): string { return this.dueDate; }
+    public setDueDate(dueDate: string): void { this.dueDate = dueDate; }
+
     public getStatus(): string { return this.status; }
+    
     public getCourseId(): number { return this.courseId; }
+    public setCourseId(courseId: number): void { this.courseId = courseId; }
     
     public toggle(): void { 
         this.status = this.status === "Complete" ? "Incomplete" : "Complete"; 
