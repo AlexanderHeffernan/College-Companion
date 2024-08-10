@@ -1,17 +1,18 @@
 <script lang="ts" setup>
   import TaskItem from './components/TaskItem.vue';
   import { taskManager } from './modules/taskManager';
+  import { courseManager } from './modules/courseManager';
   import { modalState } from './modules/modalState';
   import { Task } from './modules/task';
   import { Course } from './modules/course';
   import EditItem from './components/EditItemModal.vue';
 
-  const swenCourse: Course = Course.createCourse('Software Engineering', 'SWEN-101');
+  courseManager.addCourse(Course.createCourse('Software Engineering', 'SWEN-101'));
+  courseManager.addCourse(Course.createCourse('Computer Science', 'CSCI-101'));
+  courseManager.addCourse(Course.createCourse('Mathematics', 'MATH-101'));
+  courseManager.addCourse(Course.createCourse('Physics', 'PHYS-101'));
 
-  // Adding some tasks for demonstration
-  taskManager.addTask(Task.createQuickTask('Science Project'));
-
-  swenCourse.addTask(taskManager.addTask(Task.createQuickTask('Math Homework')));
+  courseManager.getCourses()[0].addTask(taskManager.addTask(Task.createQuickTask('Create a UML Diagram')));
 </script>
 <template>
   <div id="app" style="margin-top: 0; padding-top: 50px;">
