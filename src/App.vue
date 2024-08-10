@@ -3,11 +3,15 @@
   import { taskManager } from './modules/taskManager';
   import { modalState } from './modules/modalState';
   import { Task } from './modules/task';
+  import { Course } from './modules/course';
   import EditItem from './components/EditItemModal.vue';
 
+  const swenCourse: Course = Course.createCourse('Software Engineering', 'SWEN-101');
+
   // Adding some tasks for demonstration
-  taskManager.addTask(Task.createQuickTask('Math Homework'));
   taskManager.addTask(Task.createQuickTask('Science Project'));
+
+  swenCourse.addTask(taskManager.addTask(Task.createQuickTask('Math Homework')));
 </script>
 <template>
   <div id="app" style="margin-top: 0; padding-top: 50px;">

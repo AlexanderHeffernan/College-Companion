@@ -1,26 +1,27 @@
 import { v4 as uid } from 'uuid';
+import { Course } from './course';
 
 export class Task {
     private id: string;
     private title: string;
     private dueDate: string;
     private status: string;
-    private courseId: number;
+    private course: Course | null;
 
-    private constructor(title: string, dueDate: string, status: string, courseId: number) {
+    private constructor(title: string, dueDate: string, status: string, course: Course | null) {
         this.id = uid();
         this.title = title;
         this.dueDate = dueDate;
         this.status = status;
-        this.courseId = courseId;
+        this.course = course;
     }
 
     public static createQuickTask(title: string): Task {
-        return new Task(title, '', 'Incomplete', -1);
+        return new Task(title, '', 'Incomplete', null);
     }
 
-    public static create(title: string, dueDate: string, status: string, courseId: number): Task {
-        return new Task(title, dueDate, status, courseId);
+    public static create(title: string, dueDate: string, status: string, course: Course): Task {
+        return new Task(title, dueDate, status, course);
     }
 
     public getId(): string { return this.id; }
@@ -32,8 +33,8 @@ export class Task {
 
     public getStatus(): string { return this.status; }
     
-    public getCourseId(): number { return this.courseId; }
-    public setCourseId(courseId: number): void { this.courseId = courseId; }
+    public getCourse(): Course | null { return this.course; }
+    public setCourse(course: Course): void { this.course = course; }
     
     public toggle(): void { 
         this.status = this.status === "Complete" ? "Incomplete" : "Complete"; 

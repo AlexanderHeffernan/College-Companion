@@ -13,8 +13,9 @@ class TaskManager {
         return TaskManager.instance;
     }
 
-    public addTask(task: Task): void {
+    public addTask(task: Task): Task {
         this.tasks.value.push(task);
+        return task;
     }
 
     public getTasks(): Task[] {
