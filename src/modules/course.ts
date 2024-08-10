@@ -2,8 +2,8 @@ import { Task } from './task';
 import { Item } from './item';
 
 export class Course extends Item {
-    private constructor(title: string, code: string, tasks: Task[] = []) {
-        super(title);
+    private constructor(title: string, code: string, tasks: Task[] = [], id: string = '') {
+        super(title, id);
         super.setProperty("code", code);
         super.setProperty("tasks", tasks);
     }
@@ -22,6 +22,6 @@ export class Course extends Item {
     }
 
     public static deserialize(data: any): Course {
-        return new Course(data.title, data.properties[0][1], data.properties[1][1]);
+        return new Course(data.title, data.properties[0][1], data.properties[1][1], data.id);
     }
 }

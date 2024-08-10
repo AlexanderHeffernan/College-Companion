@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-  import { defineProps } from 'vue';
-  import { Course } from '../modules/course';
+import { defineProps } from 'vue';
+import { Course } from '../modules/course';
 
-  const props = defineProps<{
-    course: Course;
-  }>();
+const props = defineProps<{
+  course: Course;
+}>();
 </script>
 
 <template>

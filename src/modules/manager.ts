@@ -26,8 +26,6 @@ export class Manager<T> {
     public getAll(): T[] { return this.items as T[]; }
     public update(): void { this.saveToLocalStorage(); }
 
-
-
     private saveToLocalStorage(): void {
         const serializedItems = JSON.stringify(this.items.map(item => this.serializeItem(item)));
         localStorage.setItem(this.storageKey, serializedItems);

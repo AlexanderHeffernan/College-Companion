@@ -3,8 +3,8 @@ import { courseManager } from './courseManager';
 import { Item } from './item';
 
 export class Task extends Item{
-    private constructor(title: string, dueDate: string, status: string, courseId: string) {
-        super(title);
+    private constructor(title: string, dueDate: string, status: string, courseId: string, id: string = '') {
+        super(title, id);
         super.setProperty("dueDate", dueDate);
         super.setProperty("status", status);
         super.setProperty("courseId", courseId);
@@ -24,6 +24,6 @@ export class Task extends Item{
     public setCourse(course: Course): void { super.setProperty("courseId", course.getId()); }
 
     public static deserialize(data: any): Task {
-        return new Task(data.title, data.properties[0][1], data.properties[1][1], data.properties[2][1]);
+        return new Task(data.title, data.properties[0][1], data.properties[1][1], data.properties[2][1], data.id);
     }
 }

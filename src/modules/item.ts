@@ -5,7 +5,7 @@ export class Item {
     private title: string;
     private properties: Map<string, any>;
 
-    protected constructor(title: string, properties: Map<string, any> = new Map(), id: string = uid()) {
+    protected constructor(title: string, id: string = uid(), properties: Map<string, any> = new Map()) {
         this.id = id;
         this.title = title;
         this.properties = properties;
