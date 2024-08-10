@@ -6,6 +6,7 @@
   import { Task } from './modules/task';
   import { Course } from './modules/course';
   import EditItem from './components/EditItemModal.vue';
+  import AddItem from './components/AddItemModal.vue';
 
   courseManager.addCourse(Course.createCourse('Software Engineering', 'SWEN-101'));
   courseManager.addCourse(Course.createCourse('Computer Science', 'CSCI-101'));
@@ -16,9 +17,11 @@
 </script>
 <template>
   <div id="app" style="margin-top: 0; padding-top: 50px;">
-    <EditItem v-if="modalState.getCurrentModal() === 'edit'" />
+    <AddItem v-if="modalState.getCurrentModal() === 'addItem'" />
+    <EditItem v-if="modalState.getCurrentModal() === 'editItem'" />
     <h1 class="text-white text-2xl font-bold">Your Tasks</h1>
     <TaskItem v-for="task in taskManager.getTasks()" :key="task.getId()" :task="task" />
+    <button class="bg-blue-500 text-white py-1 px-4 mr-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50" @click="modalState.openModal('addItem')">Add Task</button>
   </div>
 </template>
 

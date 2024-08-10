@@ -20,8 +20,8 @@ export class Task {
         return new Task(title, '', 'Incomplete', null);
     }
 
-    public static create(title: string, dueDate: string, status: string, course: Course): Task {
-        return new Task(title, dueDate, status, course);
+    public static create(title: string, dueDate: string): Task {
+        return new Task(title, dueDate, "Incomplete", null);
     }
 
     public getId(): string { return this.id; }
