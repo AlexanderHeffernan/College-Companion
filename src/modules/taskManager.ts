@@ -1,8 +1,11 @@
+import { ref } from 'vue';
 import { Task } from './task';
 import { Manager } from './manager';
 
-export const taskManager = Manager.createInstance<Task>(
+const taskManagerRef = ref(Manager.createInstance<Task>(
     'tasks',
     Task.deserialize,
     Task.serialize
-);
+));
+
+export const taskManager = taskManagerRef.value;
