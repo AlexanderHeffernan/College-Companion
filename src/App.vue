@@ -1,31 +1,28 @@
 <script lang="ts" setup>
-  import TaskItem from './components/TaskItem.vue';
-  import CourseItem from './components/CourseItem.vue';
-  import { taskManager } from './modules/taskManager';
-  import { courseManager } from './modules/courseManager';
-  import { modalState } from './modules/modalState';
-  import { Task } from './modules/task';
-  import { Course } from './modules/course';
-  import EditTaskModal from './modals/EditTaskModal.vue';
-  import AddTaskModal from './modals/AddTaskModal.vue';
+import TaskItem from './components/TaskItem.vue';
+import CourseItem from './components/CourseItem.vue';
+import { taskManager } from './modules/taskManager';
+import { courseManager } from './modules/courseManager';
+import { modalState } from './modules/modalState';
+import { Course } from './modules/course';
+import EditTaskModal from './modals/EditTaskModal.vue';
+import AddTaskModal from './modals/AddTaskModal.vue';
 
-  courseManager.addCourse(Course.createCourse('Software Engineering', 'SWEN-101'));
-  courseManager.addCourse(Course.createCourse('Computer Science', 'CSCI-101'));
-  courseManager.addCourse(Course.createCourse('Mathematics', 'MATH-101'));
-  courseManager.addCourse(Course.createCourse('Physics', 'PHYS-101'));
-
-  courseManager.getCourses()[0].addTask(taskManager.addTask(Task.createQuickTask('Create a UML Diagram')));
+courseManager.add(Course.createCourse('Software Engineering', 'SWEN-101'));
+courseManager.add(Course.createCourse('Computer Science', 'CSCI-101'));
+courseManager.add(Course.createCourse('Mathematics', 'MATH-101'));
+courseManager.add(Course.createCourse('Physics', 'PHYS-101'));
 </script>
 <template>
   <div id="app" style="margin-top: 0; padding-top: 50px;" class="overflow-y-auto">
     <AddTaskModal v-if="modalState.getCurrentModal() === 'addItem'" />
     <EditTaskModal v-if="modalState.getCurrentModal() === 'editItem'" />
     <h1 class="text-white text-2xl font-bold">Your Tasks</h1>
-    <TaskItem v-for="task in taskManager.getTasks()" :key="task.getId()" :task="task" />
+    <TaskItem v-for="task in taskManager.getAll()" :key="task.getId()" :task="task" />
     <button class="bg-blue-500 text-white py-1 px-4 mr-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50" @click="modalState.openModal('addItem')">Add Task</button>
     <br /><br />
     <h1 class="text-white text-2xl font-bold">Your Courses</h1>
-    <CourseItem v-for="course in courseManager.getCourses()" :key="course.getId()" :course="course" />
+    <CourseItem v-for="course in courseManager.getAll()" :key="course.getId()" :course="course" />
   </div>
 </template>
 

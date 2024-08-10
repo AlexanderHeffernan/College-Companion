@@ -1,11 +1,18 @@
 <script lang="ts" setup>
-  import { defineProps } from 'vue';
+  import { defineProps, onMounted } from 'vue';
   import { Task } from '../modules/task';
   import { modalState } from '../modules/modalState';
 
   const props = defineProps<{
     task: Task;
   }>();
+
+  onMounted(() => {
+    if (!(props.task instanceof Task)) { 
+      console.error("task must be an instance of Task");
+      return; 
+    }
+  });
 </script>
 
 <template>

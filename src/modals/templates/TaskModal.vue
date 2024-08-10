@@ -14,7 +14,10 @@ const props = defineProps<{
 
 onMounted(() => {
     if (!props.initialTask) { return; }
-    
+    if (!(props.initialTask instanceof Task)) { 
+      console.error("initialTask must be an instance of Task");
+      return; 
+    }
     taskName.value = props.initialTask.getTitle();
     taskDueDate.value = props.initialTask.getDueDate() ? new Date(props.initialTask.getDueDate()) : undefined;
     taskCourse.value = props.initialTask.getCourse();
@@ -61,7 +64,7 @@ function handleClose() { modalState.closeModal(); }
       <label for="taskCourseId" class="block text-sm font-medium text-gray-700">Course ID</label>
       <select id="taskCourseId" v-model="taskCourse" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" >
         <option value="">No Course</option>
-        <option v-for="course in courseManager.getCourses()" :key="course.getId()" :value="course">{{ course.getCode() }}</option>
+        <option v-for="course in courseManager.getAll()" :key="course.getId()" :value="course">{{ course.getCode() }}</option>
       </select>
     </div>
 

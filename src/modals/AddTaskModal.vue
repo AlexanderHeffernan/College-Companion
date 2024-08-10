@@ -10,7 +10,7 @@ function handleSubmit(name: string, dueDate: string, course: Course | null) {
 
     if (course) { course.addTask(newTask); }
 
-    taskManager.addTask(newTask);
+    taskManager.add(newTask);
     modalState.closeModal();
 }
 </script>
