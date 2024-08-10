@@ -12,7 +12,7 @@
   <div class="task-item bg-gray-800 text-white p-4 rounded-lg shadow-lg flex items-center space-x-4 m-5">
     <div class="flex flex-1">
       <div>
-        <h2 class="text-xl font-semibold mr-3">{{ props.task.getTitle() }}</h2>
+        <h2 class="text-xl font-semibold mr-3 text-left">{{ props.task.getTitle() }}</h2>
         <div class="flex">
           <p v-if="props.task.getDueDate() !== ''" class="text-sm text-gray-300 mr-4">{{ props.task.getDueDate() }}</p>
           <p v-if="props.task.getCourse() !== null" class="text-sm text-gray-400">{{ props.task.getCourse()?.getCode() }}</p>    
