@@ -1,50 +1,27 @@
-import { v4 as uid } from 'uuid';
 import { Task } from './task';
+import { Item } from './item';
 
-export class Course {
-    private id: string;
-    private title: string;
-    private code: string;
-    private tasks: Task[];
-
-    private constructor(id: string = uid(), title: string, code: string, tasks: Task[] = []) {
-        this.id = id;
-        this.title = title;
-        this.code = code;
-        this.tasks = tasks;
+export class Course extends Item {
+    private constructor(title: string, code: string, tasks: Task[] = []) {
+        super(title);
+        super.setProperty("code", code);
+        super.setProperty("tasks", tasks);
     }
 
-    public static createCourse(title: string, code: string): Course {
-        return new Course(undefined, title, code, undefined);
+    public static create(title: string, code: string): Course {
+        return new Course(title, code, undefined);
     }
 
-    public getId(): string { return this.id; }
+    public getCode(): string { return super.getProperty("code"); }
+    public setCode(code: string): void { super.setProperty("code", code); }
 
-    public getTitle(): string { return this.title; }
-    public setTitle(title: string): void { this.title = title; }
-
-    public getCode(): string { return this.code; }
-    public setCode(code: string): void { this.code = code; }
-
-    public getTasks(): Task[] { return this.tasks; }
+    public getTasks(): string[] { return super.getProperty("tasks"); }
     public addTask(task: Task): void { 
-        this.tasks.push(task);
+        super.getProperty("tasks").push(task);
         task.setCourse(this);
-    }
-    public removeTask(taskId: string): void { 
-        this.tasks = this.tasks.filter(task => task.getId() !== taskId);
-    }
-
-    public static serialize(course: Course): any {
-        return {
-            id: course.id,
-            title: course.title,
-            code: course.code,
-            tasks: course.tasks
-        };
     }
 
     public static deserialize(data: any): Course {
-        return new Course(data.id, data.title, data.code, data.tasks);
+        return new Course(data.title, data.properties[0][1], data.properties[1][1]);
     }
 }

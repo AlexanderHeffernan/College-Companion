@@ -7,6 +7,8 @@ import { modalState } from './modules/modalState';
 import EditTaskModal from './modals/EditTaskModal.vue';
 import AddTaskModal from './modals/AddTaskModal.vue';
 
+console.log(taskManager.getAll()[0]);
+
 </script>
 <template>
   <div id="app" style="margin-top: 0; padding-top: 50px;" class="overflow-y-auto">

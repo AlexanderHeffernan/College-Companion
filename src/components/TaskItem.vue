@@ -12,6 +12,7 @@
       console.error("task must be an instance of Task");
       return; 
     }
+    console.log(props.task);
   });
 </script>
 

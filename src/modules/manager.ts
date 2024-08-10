@@ -1,3 +1,5 @@
+import { Item } from './item';
+
 export class Manager<T> {
     private items: T[] = [];
     private storageKey: string;
