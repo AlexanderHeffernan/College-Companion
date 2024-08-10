@@ -1,27 +1,28 @@
 import { v4 as uid } from 'uuid';
 import { Course } from './course';
+import { courseManager } from './courseManager';
 
 export class Task {
     private id: string;
     private title: string;
     private dueDate: string;
     private status: string;
-    private course: Course | null;
+    private courseId: string;
 
-    private constructor(title: string, dueDate: string, status: string, course: Course | null) {
-        this.id = uid();
+    private constructor(id: string = uid(), title: string, dueDate: string, status: string, courseId: string) {
+        this.id = id;
         this.title = title;
         this.dueDate = dueDate;
         this.status = status;
-        this.course = course;
+        this.courseId = courseId;
     }
 
     public static createQuickTask(title: string): Task {
-        return new Task(title, '', 'Incomplete', null);
+        return new Task(undefined, title, '', 'Incomplete', '');
     }
 
     public static create(title: string, dueDate: string): Task {
-        return new Task(title, dueDate, "Incomplete", null);
+        return new Task(undefined, title, dueDate, "Incomplete", '');
     }
 
     public getId(): string { return this.id; }
@@ -33,10 +34,24 @@ export class Task {
 
     public getStatus(): string { return this.status; }
     
-    public getCourse(): Course | null { return this.course; }
-    public setCourse(course: Course): void { this.course = course; }
+    public getCourse(): Course | undefined { return courseManager.getFromIndex(this.courseId); }
+    public setCourse(course: Course): void { this.courseId = course.getId(); }
     
     public toggle(): void { 
         this.status = this.status === "Complete" ? "Incomplete" : "Complete"; 
+    }
+
+    public static serialize(task: Task): any {
+        return {
+            id: task.id,
+            title: task.title,
+            dueDate: task.dueDate,
+            status: task.status,
+            courseId: task.courseId
+        };
+    }
+
+    public static deserialize(data: any): Task {
+        return new Task(data.id, data.title, data.dueDate, data.status, data.courseId);
     }
 }

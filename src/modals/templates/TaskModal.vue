@@ -27,7 +27,7 @@ const emit = defineEmits(['submit', 'close']);
 
 let taskName = ref<string>('');
 let taskDueDate = ref<Date | undefined>(undefined);
-let taskCourse = ref<Course | null>(null);
+let taskCourse = ref<Course | undefined>(undefined);
 
 function handleSubmit() {
     if (taskName.value === '') {

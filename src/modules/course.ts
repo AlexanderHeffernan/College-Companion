@@ -7,15 +7,15 @@ export class Course {
     private code: string;
     private tasks: Task[];
 
-    private constructor(title: string, code: string) {
-        this.id = uid();
+    private constructor(id: string = uid(), title: string, code: string, tasks: Task[] = []) {
+        this.id = id;
         this.title = title;
         this.code = code;
-        this.tasks = [];
+        this.tasks = tasks;
     }
 
     public static createCourse(title: string, code: string): Course {
-        return new Course(title, code);
+        return new Course(undefined, title, code, undefined);
     }
 
     public getId(): string { return this.id; }
@@ -33,5 +33,18 @@ export class Course {
     }
     public removeTask(taskId: string): void { 
         this.tasks = this.tasks.filter(task => task.getId() !== taskId);
+    }
+
+    public static serialize(course: Course): any {
+        return {
+            id: course.id,
+            title: course.title,
+            code: course.code,
+            tasks: course.tasks
+        };
+    }
+
+    public static deserialize(data: any): Course {
+        return new Course(data.id, data.title, data.code, data.tasks);
     }
 }
