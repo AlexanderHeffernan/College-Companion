@@ -5,13 +5,17 @@ import TaskModal from './templates/TaskModal.vue';
 import { taskManager } from '../modules/taskManager';
 
 function handleUpdate(name: string, dueDate: string, course: Course | null) {
-    const task = modalState.getTempData();
+  const task = modalState.getTempData();
+  if (course && task.getCourse() && course !== task.getCourse()) {
+    task.getCourse()?.removeTask(task);
+  }
 
-    task.setTitle(name);
-    task.setDueDate(dueDate);
-    task.setCourse(course);
-    taskManager.update();
-    modalState.closeModal();
+  task.setTitle(name);
+  task.setDueDate(dueDate);
+  task.setCourse(course);
+  course?.addTask(task);
+  taskManager.update();
+  modalState.closeModal();
 }
 
 </script>

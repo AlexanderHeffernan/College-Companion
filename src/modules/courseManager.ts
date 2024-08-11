@@ -1,3 +1,4 @@
+import { ref } from 'vue';
 import { Course } from './course';
 import { Manager } from './manager';
 
@@ -11,4 +12,5 @@ class CourseManager extends Manager<Course> {
     }
 }
 
-export const courseManager = new CourseManager();
+const courseManagerRef = ref(new CourseManager());
+export const courseManager = courseManagerRef.value;

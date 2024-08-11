@@ -2,7 +2,7 @@ import { Task } from './task';
 import { Item } from './item';
 
 export class Course extends Item {
-    private constructor(title: string, code: string, tasks: Task[] = [], id: string = '') {
+    private constructor(title: string, code: string, tasks: Task[] = [], id: string | undefined = undefined) {
         super(title, id);
         super.setProperty("code", code);
         super.setProperty("tasks", tasks);
@@ -19,6 +19,18 @@ export class Course extends Item {
     public addTask(task: Task): void { 
         super.getProperty("tasks").push(task);
         task.setCourse(this);
+    }
+
+    public removeTask(task: Task): void {
+        const tasks = super.getProperty("tasks") as Task[];
+        const index = tasks.indexOf(task);
+
+        if (index > -1) {
+            tasks.splice(index, 1);
+            task.removeCourse();
+        } else {
+            console.error("Task not found in the course.");
+        }
     }
 
     public static deserialize(data: any): Course {
