@@ -22,6 +22,7 @@ export class Task extends Item{
     
     public getCourse(): Course | undefined { return courseManager.getFromIndex(super.getProperty("courseId")); }
     public setCourse(course: Course): void { super.setProperty("courseId", course.getId()); }
+    public setCourseId(courseId: string): void { super.setProperty("courseId", courseId); }
     public removeCourse(): void { super.setProperty("courseId", ''); }
 
     public static deserialize(data: any): Task {

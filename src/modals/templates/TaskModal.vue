@@ -42,7 +42,8 @@ function handleSubmit() {
         const adjustedDate = new Date(Date.UTC(taskDueDate.value.getFullYear(), taskDueDate.value.getMonth(), taskDueDate.value.getDate()));
         dateString = adjustedDate.toISOString().split('T')[0];
     }
-    emit('submit', taskName.value, dateString, taskCourse.value);
+    let courseID: string | undefined = taskCourse.value ? taskCourse.value.getId() : undefined;
+    emit('submit', taskName.value, dateString, courseID);
 }
 
 function handleClose() { modalState.closeModal(); }

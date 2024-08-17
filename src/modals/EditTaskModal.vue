@@ -1,19 +1,19 @@
 <script lang="ts" setup>
 import { modalState } from '../modules/modalState';
-import { Course } from '../modules/course';
+import { courseManager } from '../modules/courseManager';
 import TaskModal from './templates/TaskModal.vue';
 import { taskManager } from '../modules/taskManager';
 
-function handleUpdate(name: string, dueDate: string, course: Course | null) {
+function handleUpdate(name: string, dueDate: string, courseId: string | undefined) {
   const task = modalState.getTempData();
-  if (course && task.getCourse() && course !== task.getCourse()) {
+  if (courseId && task.getCourse() && courseId !== task.getCourse().getId()) {
     task.getCourse()?.removeTask(task);
   }
 
   task.setTitle(name);
   task.setDueDate(dueDate);
-  task.setCourse(course);
-  course?.addTask(task);
+  task.setCourseId(courseId);
+  if (courseId) { courseManager.getFromIndex(courseId)?.addTask(task); }
   taskManager.update();
   modalState.closeModal();
 }
