@@ -14,6 +14,8 @@ export class Task extends Item{
         return new Task(title, dueDate, "Incomplete", '');
     }
 
+    public getName(): string { return this.getTitle(); }
+
     public getDueDate(): string { return super.getProperty("dueDate"); }
     public setDueDate(dueDate: string): void { super.setProperty("dueDate", dueDate); }
 

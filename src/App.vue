@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { ref, computed } from 'vue';
 import TaskItem from './components/TaskItem.vue';
 import CourseItem from './components/CourseItem.vue';
 import { taskManager } from './modules/taskManager';
@@ -8,6 +9,20 @@ import EditTaskModal from './modals/EditTaskModal.vue';
 import AddTaskModal from './modals/AddTaskModal.vue';
 import EditCourseModal from './modals/EditCourseModal.vue';
 import AddCourseModal from './modals/AddCourseModal.vue';
+
+let sortingOption = ref<string>('unsorted');
+
+const sortedTasks = computed(() => {
+  let tasks = taskManager.getAll();
+  if (sortingOption.value === 'date') {
+    return tasks.sort((a, b) => new Date(a.getDueDate()).getTime() - new Date(b.getDueDate()).getTime());
+  } else if (sortingOption.value === 'alphabetical') {
+    return tasks.sort((a, b) => a.getName().localeCompare(b.getName()));
+  } else {
+    return tasks;
+  }
+})
+
 </script>
 <template>
   <div id="app" style="margin-top: 0; padding-top: 50px;" class="overflow-y-auto">
@@ -15,9 +30,17 @@ import AddCourseModal from './modals/AddCourseModal.vue';
     <EditTaskModal v-else-if="modalState.getCurrentModal() === 'editItem'" />
     <EditCourseModal v-else-if="modalState.getCurrentModal() === 'editCourse'" />
     <AddCourseModal v-else-if="modalState.getCurrentModal() === 'addCourse'" />
-    <div v-else>
-      <h1 class="text-white text-2xl font-bold mb-3">Your Tasks</h1>
-      <TaskItem v-for="task in taskManager.getAll().filter(task => task.getStatus() !== 'Complete')" :key="task.getId()" :task="task" />
+    <div v-else class="mx-5">
+      <div class="flex relative items-center">
+        <h1 class="text-white text-2xl font-bold flex-grow">Your Tasks</h1>
+        <select id="taskSorting" v-model="sortingOption" class="absolute right-0 mt-1 block w-32 px-3 py-2 bg-gray-800 text-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+          <option value="unsorted">Unsorted</option>
+          <option value="date">Date</option>
+          <option value="alphabetical">Alphabetical</option>
+        </select>
+      </div>
+
+      <TaskItem v-for="task in sortedTasks.filter(task => task.getStatus() !== 'Complete')" :key="task.getId()" :task="task" />
       <button class="bg-blue-500 text-white py-1 px-4 mr-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50" @click="modalState.openModal('addItem')">Add Task</button>
       <br /><br />
 
