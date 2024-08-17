@@ -23,14 +23,14 @@ onMounted(() => {
     }
     taskName.value = props.initialTask.getTitle();
     taskDueDate.value = props.initialTask.getDueDate() ? new Date(props.initialTask.getDueDate()) : undefined;
-    taskCourse.value = props.initialTask.getCourse();
+    taskCourse.value = props.initialTask.getCourse() || '';
 });
 
 const emit = defineEmits(['submit', 'close']);
 
 let taskName = ref<string>('');
 let taskDueDate = ref<Date | undefined>(undefined);
-let taskCourse = ref<Course | undefined>(undefined);
+let taskCourse = ref<string | Course>('');
 
 function handleSubmit() {
     if (taskName.value === '') {
@@ -42,7 +42,10 @@ function handleSubmit() {
         const adjustedDate = new Date(Date.UTC(taskDueDate.value.getFullYear(), taskDueDate.value.getMonth(), taskDueDate.value.getDate()));
         dateString = adjustedDate.toISOString().split('T')[0];
     }
-    let courseID: string | undefined = taskCourse.value ? taskCourse.value.getId() : undefined;
+    let courseID: string | undefined = typeof taskCourse.value === 'string' && taskCourse.value === ''
+        ? undefined
+        : (taskCourse.value as Course)?.getId();
+    
     emit('submit', taskName.value, dateString, courseID);
 }
 
