@@ -16,7 +16,7 @@ import AddCourseModal from './modals/AddCourseModal.vue';
     <EditCourseModal v-else-if="modalState.getCurrentModal() === 'editCourse'" />
     <AddCourseModal v-else-if="modalState.getCurrentModal() === 'addCourse'" />
     <div v-else>
-      <h1 class="text-white text-2xl font-bold">Your Tasks</h1>
+      <h1 class="text-white text-2xl font-bold mb-3">Your Tasks</h1>
       <TaskItem v-for="task in taskManager.getAll().filter(task => task.getStatus() !== 'Complete')" :key="task.getId()" :task="task" />
       <button class="bg-blue-500 text-white py-1 px-4 mr-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50" @click="modalState.openModal('addItem')">Add Task</button>
       <br /><br />
@@ -25,7 +25,7 @@ import AddCourseModal from './modals/AddCourseModal.vue';
       <TaskItem v-for="task in taskManager.getAll().filter(task => task.getStatus() !== 'Incomplete')" :key="task.getId()" :task="task" />
       <br /><br />
       
-      <h1 class="text-white text-2xl font-bold">Your Courses</h1>
+      <h1 class="text-white text-2xl font-bold mb-3">Your Courses</h1>
       <CourseItem v-for="course in courseManager.getAll()" :key="course.getId()" :course="course" />
       <button class="bg-blue-500 text-white py-1 px-4 mr-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50" @click="modalState.openModal('addCourse')">Add Course</button>
     </div>
