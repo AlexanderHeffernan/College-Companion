@@ -1,6 +1,6 @@
 <template>
-    <div class="mb-4">
-        <label :for="props.id" class="block text-sm font-medium text-gray-700">{{ props.label }}</label>
+    <div class="mb-4 flex items-center pl-5">
+        <label :for="props.id" class="text-left block text-sm font-medium text-white w-48">{{ props.label }}</label>
         <input
             :id="props.id"
             :value="props.modelValue"
