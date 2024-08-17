@@ -23,6 +23,16 @@ export class Manager<T> {
         return item;
     }
 
+    public remove(item: T): void {
+        const index = this.items.indexOf(item);
+        if (index > -1) {
+            this.items.splice(index, 1);
+            this.saveToLocalStorage();
+        } else {
+            console.error('Item not found in manager');
+        }
+    }
+
     public getAll(): T[] { return this.items as T[]; }
     public update(): void { this.saveToLocalStorage(); }
 
