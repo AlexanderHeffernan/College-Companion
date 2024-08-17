@@ -33,7 +33,7 @@ const sortedTasks = computed(() => {
     <div v-else class="mx-5">
       <div class="flex relative items-center">
         <h1 class="text-white text-2xl font-bold flex-grow">Your Tasks</h1>
-        <select id="taskSorting" v-model="sortingOption" class="absolute right-0 mt-1 block w-32 px-3 py-2 bg-gray-800 text-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        <select id="taskSorting" v-model="sortingOption" class="absolute right-0 mt-1 block w-32 px-3 py-2 bg-gray-800 text-gray-500 transition-[color] transition-500 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm hover:text-white">
           <option value="unsorted">Unsorted</option>
           <option value="date">Date</option>
           <option value="alphabetical">Alphabetical</option>
