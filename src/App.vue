@@ -1,83 +1,18 @@
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
-import TaskItem from './components/TaskItem.vue';
-import CourseItem from './components/CourseItem.vue';
-import { taskManager } from './modules/taskManager';
-import { courseManager } from './modules/courseManager';
 import { modalState } from './modules/modalState';
 import EditTaskModal from './modals/EditTaskModal.vue';
 import AddTaskModal from './modals/AddTaskModal.vue';
 import EditCourseModal from './modals/EditCourseModal.vue';
 import AddCourseModal from './modals/AddCourseModal.vue';
-import { Task } from './modules/task';
-
-let sortingOption = ref<string>('unsorted');
-let courseFilter = ref<string>('all');
-
-const tasks = computed(() => {
-  // Define the sort function based on sortingOption
-  let sortFunction;
-  switch (sortingOption.value) {
-    case 'date':
-      sortFunction = (a: Task, b: Task) => a.getDueDate().localeCompare(b.getDueDate());
-      break;
-    case 'alphabetical':
-      sortFunction = (a: Task, b: Task) => a.getTitle().localeCompare(b.getTitle());
-      break;
-    default:
-      sortFunction = () => 0; // No sorting
-  }
-
-  // Define filter functions array
-  let filterFunctions = [];
-
-  // Add filter for course if courseFilter is not 'all'
-  if (courseFilter.value !== 'all') {
-    filterFunctions.push((task: Task) => task.getCourse()?.getId() === courseFilter.value);
-  }
-
-  // Add filter for status 'Incomplete'
-  filterFunctions.push((task: Task) => task.getStatus() === 'Incomplete');
-
-  // Apply sortAndFilter method with the defined sort function and filters
-  return taskManager.sortAndFilter(sortFunction, filterFunctions);
-});
-
+import ViewCarousel from './components/views/ViewCarousel.vue';
 </script>
 <template>
-  <div id="app" style="margin-top: 0; padding-top: 50px;" class="overflow-y-auto">
+  <div id="app" style="margin-top: 0;" class="overflow-y-auto">
     <AddTaskModal v-if="modalState.getCurrentModal() === 'addItem'" />
     <EditTaskModal v-else-if="modalState.getCurrentModal() === 'editItem'" />
     <EditCourseModal v-else-if="modalState.getCurrentModal() === 'editCourse'" />
     <AddCourseModal v-else-if="modalState.getCurrentModal() === 'addCourse'" />
-    <div v-else class="mx-5">
-      <div class="flex relative items-center">
-        <h1 class="text-white text-2xl font-bold flex-grow text-left ml-4">Your Tasks</h1>
-        <select id="taskSorting" v-model="sortingOption" class="absolute right-0 mt-1 block w-32 px-3 py-2 bg-gray-800 text-gray-500 transition-[color] transition-500 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm hover:text-white">
-          <option value="unsorted">Unsorted</option>
-          <option value="date">Date</option>
-          <option value="alphabetical">Alphabetical</option>
-        </select>
-        <select id="courseFilter" v-model="courseFilter" class="absolute right-36 mt-1 block w-32 px-3 py-2 bg-gray-800 text-gray-500 transition-[color] transition-500 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm hover:text-white">
-          <option value="all">All Courses</option>
-          <option v-for="course in courseManager.getAll()" :key="course.getId()" :value="course.getId()">
-            {{ course.getCode() }}
-          </option>
-        </select>
-      </div>
-
-      <TaskItem v-for="task in tasks" :key="task.getId()" :task="task" />
-      <button class="bg-blue-500 text-white py-1 px-4 mr-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50" @click="modalState.openModal('addItem')">Add Task</button>
-      <br /><br />
-
-      <h1 v-if="taskManager.getAll().filter(task => task.getStatus() !== 'Incomplete').length !== 0" class="text-white text-2xl font-bold">Complete Tasks</h1>
-      <TaskItem v-for="task in taskManager.getAll().filter(task => task.getStatus() !== 'Incomplete')" :key="task.getId()" :task="task" />
-      <br /><br />
-      
-      <h1 class="text-white text-2xl font-bold mb-3">Your Courses</h1>
-      <CourseItem v-for="course in courseManager.getAll()" :key="course.getId()" :course="course" />
-      <button class="bg-blue-500 text-white py-1 px-4 mr-4 mb-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50" @click="modalState.openModal('addCourse')">Add Course</button>
-    </div>
+    <ViewCarousel v-else />
   </div>
 </template>
 
@@ -110,18 +45,5 @@ body {
     width: 100vw;
     height: 100vh;
   }
-}
-
-#app::-webkit-scrollbar {
-  height: 8px;
-}
-
-#app::-webkit-scrollbar-thumb {
-  background-color: #3C82F6;
-  border-radius: 4px;
-}
-
-#app::-webkit-scrollbar-thumb:hover {
-  background-color: #2463EB;
 }
 </style>
