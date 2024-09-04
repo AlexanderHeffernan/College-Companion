@@ -35,7 +35,7 @@ const tasks = computed(() => {
     </div>
     
     <TaskItem v-for="task in tasks" :key="task.getId()" :task="task" />
-    <button class="bg-blue-500 text-white py-1 px-4 mr-4 mb-5 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50" @click="modalState.openModal('addItem')">Add Task</button>
+    <button class="bg-blue-500 text-white py-1 px-4 mr-4 mb-5 mt-5 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50" @click="modalState.openModal('addItem')">Add Task</button>
 
     <h1 v-if="taskManager.getAll().filter(task => task.getStatus() !== 'Incomplete').length !== 0" class="text-white text-2xl font-bold">Complete Tasks</h1>
     <TaskItem v-for="task in taskManager.getAll().filter(task => task.getStatus() !== 'Incomplete')" :key="task.getId()" :task="task" />
